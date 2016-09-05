@@ -2,7 +2,7 @@
 base: cloudius/osv-openjdk8
 
 # Start up the application.
-cmdline: /java.so -jar /example.jar
+cmdline: /java.so -jar /example.jar /config/staging.json
 
 # Build the application.
 build: ./gradlew withDeps
@@ -10,3 +10,4 @@ build: ./gradlew withDeps
 # Files to include in the image.
 files:
   /example.jar: build/libs/capstan-gradle-example-java-with-deps-1.0-SNAPSHOT.jar
+  /config/staging.json: build/resources/main/external/staging.json
