@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M2'
+    }
+}
+
+group 'org.eoti.osv'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+sourceCompatibility = 1.8
+
+ext {
+    junit4Version        = '4.12'
+    junitVintageVersion  = '4.12.0-M2'
+    junitPlatformVersion = '1.0.0-M2'
+    junitJupiterVersion  = '5.0.0-M2'
+    log4JVersion = '2.5'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit Jupiter API and TestEngine implementation
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+
+    // If you also want to support JUnit 3 and JUnit 4 tests
+    testCompile("junit:junit:${junit4Version}")
+    testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
+}
+
+task withDeps(type: Jar, dependsOn: build) {
+    manifest {
+        attributes 'Implementation-Version': version,
+                    'Main-Class': 'org.eoti.osv.Main'
+    }
+    baseName = project.name + '-with-deps'
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    with jar
+}

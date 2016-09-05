@@ -1,0 +1,12 @@
+# Capstan will download this automatically.
+base: cloudius/osv-openjdk8
+
+# Start up the application.
+cmdline: /java.so -jar /example.jar
+
+# Build the application.
+build: ./gradlew withDeps
+
+# Files to include in the image.
+files:
+  /example.jar: build/libs/capstan-gradle-example-java-with-deps-1.0-SNAPSHOT.jar
