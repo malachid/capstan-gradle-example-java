@@ -50,3 +50,9 @@ task withDeps(type: Jar, dependsOn: build) {
     }
     with jar
 }
+
+task execute(type: JavaExec) {
+    // https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html
+    main = 'org.eoti.osv.Main'
+    classpath = sourceSets.main.runtimeClasspath
+}

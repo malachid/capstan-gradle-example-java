@@ -27,10 +27,17 @@ two alternatives to run the application, with or without Capstanfile
 capstan run 
 ```
 
-* Using a Jar file directly using [Gradle](https://docs.gradle.org/current/userguide/userguide.html), without a Capstanfile
+* Execute directly using [Gradle](https://docs.gradle.org/current/userguide/userguide.html), without a Capstanfile
+
+```
+./gradlew execute
+```
+
+You can also just build the jar, without executing it:
 
 ```
 ./gradlew withDeps
 ```
+
 
 That's it!
