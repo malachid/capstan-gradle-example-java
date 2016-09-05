@@ -2,6 +2,8 @@
 
 This is an example [Capstan](https://github.com/cloudius-systems/capstan) project for building and running Java applications on [OSv](http://osv.io/).
 
+NOTE: This is tweaked from [the official Maven example](https://github.com/cloudius-systems/capstan-example-java).
+
 To try it out, first install Capstan:
 
 ``` sh
