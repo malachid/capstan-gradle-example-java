@@ -27,7 +27,7 @@ two alternatives to run the application, with or without Capstanfile
 capstan run 
 ```
 
-* Using a Jar file directly using [Apache Maven](https://maven.apache.org/), without a Capstanfile
+* Using a Jar file directly using [Gradle](https://docs.gradle.org/current/userguide/userguide.html), without a Capstanfile
 
 ```
 ./gradlew withDeps
