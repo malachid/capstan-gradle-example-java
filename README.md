@@ -19,7 +19,7 @@ Next step, clone this repository:
 git clone git@github.com:malachid/capstan-gradle-example-java.git
 ```
 
-two alternatives to run the application, with or without Capstanfile
+There are two alternatives to run the application, with or without capstan.
 
 * Using a Capstanfile
 
