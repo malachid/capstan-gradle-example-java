@@ -11,6 +11,7 @@ group 'org.eoti.osv'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'java-library-distribution'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
 sourceCompatibility = 1.8
@@ -41,26 +42,35 @@ dependencies {
     testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
 }
 
-task withDeps(type: Jar, dependsOn: build) {
+jar {
     manifest {
-        attributes 'Implementation-Version': version,
-                    'Main-Class': 'org.eoti.osv.Main'
+        attributes 'Implementation-Title': 'Capstan Example for Java with Gradle',
+                'Implementation-Version': version,
+                'Main-Class': 'org.eoti.osv.Main',
+                'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
     }
-    baseName = project.name + '-with-deps'
-    from {
-        configurations.compile.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
-    with jar
-
-    // Excluding some resources from the Jar that we intend to copy over directly
-    exclude("**/external/**")
+    exclude('external/**')
 }
 
-task execute(type: JavaExec) {
+distributions {
+    main {
+        baseName = 'rootfs'
+        contents {
+            from {
+                'src/main/resources/external'
+            }
+        }
+    }
+}
+
+task buildRootFS(type: Copy, dependsOn: assembleDist) {
+    from(zipTree(file("${buildDir}/distributions/rootfs-${version}.zip")))
+    into(file("${buildDir}"))
+}
+
+task execute(type: JavaExec, dependsOn: buildRootFS) {
     // https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html
     main = 'org.eoti.osv.Main'
     classpath = sourceSets.main.runtimeClasspath
-    args 'build/resources/main/external/staging.json'
+    args 'build/rootfs-1.0-SNAPSHOT/config/staging.json'
 }

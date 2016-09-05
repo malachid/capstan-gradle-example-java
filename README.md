@@ -33,10 +33,10 @@ capstan run
 ./gradlew execute
 ```
 
-You can also just build the jar, without executing it:
+You can also just build the rootfs, without executing it:
 
 ```
-./gradlew withDeps
+./gradlew buildRootFS
 ```
 
 
